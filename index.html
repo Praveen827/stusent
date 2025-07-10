@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Engineering Cut Off Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px;
+      background-color: #f5f5f5;
+    }
+    .section {
+      display: none;
+    }
+    .active {
+      display: block;
+    }
+    input, button {
+      padding: 10px;
+      margin: 10px;
+      width: 250px;
+      font-size: 16px;
+    }
+    h1 {
+      color: #2c3e50;
+    }
+    #result {
+      font-size: 22px;
+      color: #e74c3c;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Engineering Cut Off</h1>
+
+  <!-- Section 1: Student Details -->
+  <div id="section1" class="section active">
+    <h2>Enter Student Details</h2>
+    <input type="text" id="name" placeholder="Student Name" required><br>
+    <input type="text" id="regno" placeholder="Register Number" required><br>
+    <input type="text" id="dept" placeholder="Department" required><br>
+    <button onclick="goToMarks()">Next</button>
+  </div>
+
+  <!-- Section 2: Marks Entry and Cut Off -->
+  <div id="section2" class="section">
+    <h2>Enter Marks</h2>
+    <div id="studentInfo" style="margin-bottom: 20px;"></div>
+    <input type="number" id="maths" placeholder="Maths (out of 100)"><br>
+    <input type="number" id="physics" placeholder="Physics (out of 100)"><br>
+    <input type="number" id="chemistry" placeholder="Chemistry (out of 100)"><br>
+    <button onclick="calculateCutOff()">Calculate Cut Off</button>
+    <h3 id="result"></h3>
+  </div>
+
+  <script>
+    function goToMarks() {
+      const name = document.getElementById("name").value;
+      const regno = document.getElementById("regno").value;
+      const dept = document.getElementById("dept").value;
+
+      if (!name || !regno || !dept) {
+        alert("Please fill all student details.");
+        return;
+      }
+
+      // Store and show details
+      document.getElementById("studentInfo").innerHTML =
+        `<strong>Name:</strong> ${name} &nbsp;&nbsp;
+         <strong>Reg No:</strong> ${regno} &nbsp;&nbsp;
+         <strong>Dept:</strong> ${dept}`;
+
+      document.getElementById("section1").classList.remove("active");
+      document.getElementById("section2").classList.add("active");
+    }
+
+    function calculateCutOff() {
+      const maths = parseFloat(document.getElementById("maths").value);
+      const phy = parseFloat(document.getElementById("physics").value);
+      const chem = parseFloat(document.getElementById("chemistry").value);
+
+      if (isNaN(maths) || isNaN(phy) || isNaN(chem)) {
+        alert("Please enter all marks correctly.");
+        return;
+      }
+
+      const cutoff = maths + ((phy + chem) / 2);
+      document.getElementById("result").innerText =
+        "Cut Off Mark: " + cutoff.toFixed(2) + " / 200";
+    }
+  </script>
+
+</body>
+</html>
